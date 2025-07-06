@@ -17,9 +17,7 @@ public class MainCommand {
                         .executes((CommandSender sender, CommandArguments args) -> {
                             SkyboxEngine.getConfigManager().reload();
                             TextOutputUtil.sendMiniMessage(sender,true,"Config reloaded");
-                            Bukkit.getOnlinePlayers().forEach(p -> {
-                                SkyboxEngine.getPlayerSkyboxManager().checkWorldSkyboxChange(p,p.getWorld(),p.getWorld());
-                            });
+                            Bukkit.getOnlinePlayers().forEach(p -> SkyboxEngine.getPlayerSkyboxManager().checkWorldSkyboxChange(p,p.getWorld(),p.getWorld()));
                         })
                 ).register();
 

@@ -66,7 +66,6 @@ public class ConfigManager {
 
 
     public <T> void saveYamlConfiguration(File file, T configuration) {
-        final YamlConfigurationProperties properties = createConfigProperties();
         YamlConfigurations.save(file.toPath(), (Class<T>) configuration.getClass(), configuration, createConfigProperties());
     }
 }

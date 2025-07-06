@@ -118,17 +118,4 @@ public final class SkyboxEngine extends JavaPlugin {
         configManager.reload();
         return true;
     }
-    public boolean reloadSettings() {
-        final Optional<Throwable> error = configManager.loadConfig();
-        Settings oldConfig = configInstance;
-        if (error.isPresent()) {
-            instance.getLogger().log(java.util.logging.Level.SEVERE, "Failed to load configuration", error.get());
-            reloadConfig();
-            configInstance = oldConfig;
-            return false;
-        }
-        return true;
-    }
-
-
 }

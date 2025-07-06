@@ -12,10 +12,10 @@ import org.bukkit.inventory.ItemStack;
 public class WorldSkybox {
 
     @Getter
-    private World world;
-    private Player player;
+    private final World world;
+    private final Player player;
     @Getter
-    private Settings.SkyboxSettings settings;
+    private final Settings.SkyboxSettings settings;
 
     private WrapperEntity skyboxEntity;
 
