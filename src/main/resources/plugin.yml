@@ -1,0 +1,11 @@
+name: SkyboxEngine
+version: ${version}
+main: me.dragoncraft.skyboxengine.SkyboxEngine
+api-version: '1.21.4'
+authors: [ Dragoncraft ]
+description: Create custom skyboxes for each dimension
+load: STARTUP
+depend: [ packetevents ]
+libraries:
+  - de.exlll:configlib-yaml:${configlibVersion}
+  - de.exlll:configlib-paper:${configlibVersion}
