@@ -83,9 +83,9 @@ public class PlayerSkyboxManager {
 
     public void checkWorldSkyboxChange(Player player, World world,World last) {
         if (last != null && hasSkybox(player)) {
-            if (playerSkyboxes.get(player.getUniqueId()).getWorld() == last) {
+            if (getPlayerSkybox(player).getWorld() == last) {
                 if (SkyboxEngine.getConfigInstance().getDebugLogLevel() > 0) {
-                    SkyboxEngine.info("Removing skybox " + playerSkyboxes.get(player.getUniqueId()).getSettings().getSkyboxId() + " for player " + player.getName());
+                    SkyboxEngine.info("Removing skybox " + getPlayerSkybox(player).getSettings().getSkyboxId() + " for player " + player.getName());
                 }
                 removePlayer(player);
             }

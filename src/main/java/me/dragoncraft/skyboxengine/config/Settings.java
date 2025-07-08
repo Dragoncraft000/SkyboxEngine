@@ -23,6 +23,7 @@ public final class Settings {
     private int biomeCheckInterval = 20;
     private Map<String,SkyboxSettings> biomeSkyboxes = new HashMap<>();
 
+    @SuppressWarnings("unused")
     @Configuration
     @Getter
     public static class SkyboxSettings {
