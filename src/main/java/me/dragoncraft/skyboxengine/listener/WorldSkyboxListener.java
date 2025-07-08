@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class SkyboxListener implements Listener {
+public class WorldSkyboxListener implements Listener {
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {

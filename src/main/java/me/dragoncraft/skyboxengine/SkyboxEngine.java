@@ -8,7 +8,8 @@ import lombok.Setter;
 import me.dragoncraft.skyboxengine.commands.MainCommand;
 import me.dragoncraft.skyboxengine.config.ConfigManager;
 import me.dragoncraft.skyboxengine.config.Settings;
-import me.dragoncraft.skyboxengine.listener.SkyboxListener;
+import me.dragoncraft.skyboxengine.listener.BiomeSkyboxListener;
+import me.dragoncraft.skyboxengine.listener.WorldSkyboxListener;
 import me.dragoncraft.skyboxengine.manager.PlayerSkyboxManager;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
@@ -101,7 +102,8 @@ public final class SkyboxEngine extends JavaPlugin {
     }
 
     private void registerListeners() {
-        registerListener(new SkyboxListener());
+        registerListener(new WorldSkyboxListener());
+        registerListener(new BiomeSkyboxListener());
     }
 
     /**

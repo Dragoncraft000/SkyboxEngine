@@ -2,9 +2,11 @@ package me.dragoncraft.skyboxengine.manager;
 
 import me.dragoncraft.skyboxengine.SkyboxEngine;
 import me.dragoncraft.skyboxengine.config.Settings;
-import me.dragoncraft.skyboxengine.skybox.WorldSkybox;
+import me.dragoncraft.skyboxengine.listener.BiomeSkyboxListener;
+import me.dragoncraft.skyboxengine.skybox.PlayerSkybox;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -13,7 +15,7 @@ import java.util.UUID;
 
 public class PlayerSkyboxManager {
 
-    private final HashMap<UUID, WorldSkybox> playerSkyboxes = new HashMap<>();
+    private final HashMap<UUID, PlayerSkybox> playerSkyboxes = new HashMap<>();
     private final BukkitTask updateTask;
 
     public PlayerSkyboxManager() {
@@ -22,20 +24,23 @@ public class PlayerSkyboxManager {
 
 
     private void tickSkyboxes() {
-        playerSkyboxes.forEach(((uuid, worldSkybox) -> {
-            if (worldSkybox == null) {
+        playerSkyboxes.forEach(((uuid, playerSkybox) -> {
+            if (playerSkybox == null) {
                 return;
             }
-            worldSkybox.tickSkybox();
+            playerSkybox.tickSkybox();
         }));
     }
 
 
-    public WorldSkybox getPlayerSkybox(Player player) {
+    public PlayerSkybox getPlayerSkybox(Player player) {
         return playerSkyboxes.getOrDefault(player.getUniqueId(),null);
     }
+    public boolean hasSkybox(Player player) {
+        return playerSkyboxes.containsKey(player.getUniqueId()) && playerSkyboxes.get(player.getUniqueId()) != null;
+    }
 
-    public void setPlayerSkybox(Player player, WorldSkybox settings) {
+    public void setPlayerSkybox(Player player, PlayerSkybox settings) {
         playerSkyboxes.put(player.getUniqueId(),settings);
     }
 
@@ -45,29 +50,52 @@ public class PlayerSkyboxManager {
     }
 
     public void removePlayer(Player player) {
-        if (playerSkyboxes.getOrDefault(player.getUniqueId(),null) != null) {
-            playerSkyboxes.get(player.getUniqueId()).removeSkybox();
+        removePlayer(player,0);
+    }
+    public void removePlayer(Player player,int delay) {
+        if (hasSkybox(player)) {
+            playerSkyboxes.get(player.getUniqueId()).removeSkybox(delay);
         }
         playerSkyboxes.remove(player.getUniqueId());
     }
 
 
+
+    public void checkBiomeSkyboxChange(Player player, Biome current, Biome last) {
+        Settings.SkyboxSettings currentSettings = SkyboxEngine.getConfigInstance().getBiomeSkyboxes().getOrDefault(current.getKey().toString(),null);
+        Settings.SkyboxSettings lastSettings = SkyboxEngine.getConfigInstance().getBiomeSkyboxes().getOrDefault(last.getKey().toString(),null);
+
+        if (currentSettings != null && hasSkybox(player)) {
+            removePlayer(player,1);
+        }
+        if (currentSettings != null && !hasSkybox(player)) {
+            PlayerSkybox skybox = new PlayerSkybox(player, player.getWorld(), BiomeSkyboxListener.getPlayerBiome(player),currentSettings);
+            setPlayerSkybox(player,skybox);
+            skybox.createSkybox();
+        }
+        if (currentSettings == null && lastSettings != null) {
+            removePlayer(player,1);
+            checkWorldSkyboxChange(player,player.getWorld(),null);
+        }
+    }
+
+
+
     public void checkWorldSkyboxChange(Player player, World world,World last) {
-        if (last != null && playerSkyboxes.containsKey(player.getUniqueId()) && playerSkyboxes.get(player.getUniqueId()) != null) {
+        if (last != null && hasSkybox(player)) {
             if (playerSkyboxes.get(player.getUniqueId()).getWorld() == last) {
                 if (SkyboxEngine.getConfigInstance().getDebugLogLevel() > 0) {
                     SkyboxEngine.info("Removing skybox " + playerSkyboxes.get(player.getUniqueId()).getSettings().getSkyboxId() + " for player " + player.getName());
                 }
-                playerSkyboxes.get(player.getUniqueId()).removeSkybox();
                 removePlayer(player);
             }
         }
-        if (world != null && (!playerSkyboxes.containsKey(player.getUniqueId()) || playerSkyboxes.get(player.getUniqueId()) == null)) {
+        if (world != null && !hasSkybox(player)) {
             if (SkyboxEngine.getConfigInstance().getDimensionSkyboxes().containsKey(world.getKey().toString())) {
                 Settings.SkyboxSettings settings = SkyboxEngine.getConfigInstance().getDimensionSkyboxes().get(world.getKey().toString());
-                WorldSkybox skybox = new WorldSkybox(player,world,settings);
+                PlayerSkybox skybox = new PlayerSkybox(player,world,settings);
                 skybox.createSkybox();
-                playerSkyboxes.put(player.getUniqueId(),skybox);
+                setPlayerSkybox(player,skybox);
                 if (SkyboxEngine.getConfigInstance().getDebugLogLevel() > 0) {
                     SkyboxEngine.info("Creating skybox " + skybox.getSettings().getSkyboxId() + " for player " + player.getName());
                 }

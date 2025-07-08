@@ -19,6 +19,10 @@ public final class Settings {
     @Comment({"\nDimension Skybox Configurations", "Example Dimension Config:", "  minecraft:overworld:", "    skyboxId: 'ult_effects:model_shader_1'", "    redChannel_time: true", "    doublePrecision_time: true"})
     private Map<String,SkyboxSettings> dimensionSkyboxes = new HashMap<>();
 
+    @Comment("Delay in ticks between checks whether the player is in a new biome")
+    private int biomeCheckInterval = 20;
+    private Map<String,SkyboxSettings> biomeSkyboxes = new HashMap<>();
+
     @Configuration
     @Getter
     public static class SkyboxSettings {

@@ -6,13 +6,16 @@ import me.dragoncraft.skyboxengine.config.Settings;
 import me.dragoncraft.skyboxengine.util.ItemDisplays;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class WorldSkybox {
+public class PlayerSkybox {
 
     @Getter
     private final World world;
+    @Getter
+    private Biome biome = null;
     private final Player player;
     @Getter
     private final Settings.SkyboxSettings settings;
@@ -38,9 +41,15 @@ public class WorldSkybox {
     }
 
 
-    public WorldSkybox(Player player,World world,Settings.SkyboxSettings settings) {
+    public PlayerSkybox(Player player, World world, Settings.SkyboxSettings settings) {
         this.player = player;
         this.world = world;
+        this.settings = settings;
+    }
+    public PlayerSkybox(Player player, World world,Biome biome, Settings.SkyboxSettings settings) {
+        this.player = player;
+        this.world = world;
+        this.biome = biome;
         this.settings = settings;
     }
 
@@ -105,9 +114,16 @@ public class WorldSkybox {
         }
     }
 
-
     public void removeSkybox() {
-        skyboxEntity.remove();
+        removeSkybox(0);
+    }
+    public void removeSkybox(int delay) {
+        if (delay > 0)  {
+            Bukkit.getScheduler().runTaskLater(SkyboxEngine.getInstance(),() -> skyboxEntity.remove(),delay);
+        }
+        else {
+            skyboxEntity.remove();
+        }
     }
 
 }
