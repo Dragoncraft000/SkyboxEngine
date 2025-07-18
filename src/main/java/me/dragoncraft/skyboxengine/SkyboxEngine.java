@@ -93,7 +93,6 @@ public final class SkyboxEngine extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Disabling Skybox Engine");
-        saveDefaultConfig();
         CommandAPI.onDisable();
     }
 

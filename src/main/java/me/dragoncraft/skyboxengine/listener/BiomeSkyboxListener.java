@@ -29,6 +29,7 @@ public class BiomeSkyboxListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         lastPlayerBiomes.put(event.getPlayer().getUniqueId(),getPlayerBiome(event.getPlayer()));
+        SkyboxEngine.getPlayerSkyboxManager().checkBiomeSkyboxChange(event.getPlayer(), getPlayerBiome(event.getPlayer()),getPlayerBiome(event.getPlayer()));
     }
 
     public static Biome getPlayerBiome(Player player) {

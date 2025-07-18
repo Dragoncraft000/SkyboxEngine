@@ -19,7 +19,7 @@ public class PlayerSkyboxManager {
     private final BukkitTask updateTask;
 
     public PlayerSkyboxManager() {
-        updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(SkyboxEngine.getInstance(),this::tickSkyboxes,0,1);
+        updateTask = Bukkit.getScheduler().runTaskTimer(SkyboxEngine.getInstance(),this::tickSkyboxes,0,1);
     }
 
 

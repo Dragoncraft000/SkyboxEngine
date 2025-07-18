@@ -31,7 +31,7 @@ public class ConfigManager {
             return Optional.empty();
         }
         try {
-            settings = YamlConfigurations.update(
+            settings = YamlConfigurations.load(
                     settingsFile.toPath(),
                     Settings.class,
                     properties
@@ -46,7 +46,7 @@ public class ConfigManager {
     public static YamlConfigurationProperties createConfigProperties() {
         return YamlConfigurationProperties.newBuilder()
                 .charset(StandardCharsets.UTF_8)
-                .outputNulls(true)
+                .outputNulls(false)
                 .inputNulls(false)
                 .build();
     }
@@ -54,8 +54,12 @@ public class ConfigManager {
     public void reload() {
         settings = YamlConfigurations.load(new File(plugin.getDataFolder(), "config.yml").toPath(), Settings.class,createConfigProperties());
         SkyboxEngine.setConfigInstance(settings);
-        SkyboxEngine.info("Loaded " + settings.getDimensionSkyboxes().size() + " skybox overrides");
+        SkyboxEngine.info("Loaded " + settings.getDimensionSkyboxes().size() + " dimension overrides");
         settings.getDimensionSkyboxes().forEach((key,value) -> {
+            SkyboxEngine.info(" - " + key + " -> " + value.getSkyboxId() + (value.isRedChannel_time() ? " (Time Sync)" : ""));
+        });
+        SkyboxEngine.info("Loaded " + settings.getBiomeSkyboxes().size() + " biome overrides");
+        settings.getBiomeSkyboxes().forEach((key,value) -> {
             SkyboxEngine.info(" - " + key + " -> " + value.getSkyboxId() + (value.isRedChannel_time() ? " (Time Sync)" : ""));
         });
     }
