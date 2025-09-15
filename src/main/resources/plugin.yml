@@ -1,6 +1,6 @@
 name: SkyboxEngine
 version: ${version}
-main: me.dragoncraft.skyboxengine.SkyboxEngine
+main: de.vectorflare.skyboxengine.SkyboxEngine
 api-version: '1.21.4'
 authors: [ Dragoncraft ]
 description: Create custom skyboxes for each dimension

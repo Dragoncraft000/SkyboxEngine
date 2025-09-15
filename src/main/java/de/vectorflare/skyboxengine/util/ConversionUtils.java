@@ -1,4 +1,4 @@
-package me.dragoncraft.skyboxengine.util;
+package de.vectorflare.skyboxengine.util;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;

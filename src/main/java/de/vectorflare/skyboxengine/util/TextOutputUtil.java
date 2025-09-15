@@ -1,8 +1,9 @@
-package me.dragoncraft.skyboxengine.util;
+package de.vectorflare.skyboxengine.util;
 
-import me.dragoncraft.skyboxengine.SkyboxEngine;
+import de.vectorflare.skyboxengine.SkyboxEngine;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -17,53 +18,61 @@ public class TextOutputUtil {
     public static void broadcast(boolean usePrefix, String message) {
         String prefix = SkyboxEngine.getConfigInstance().getPrefix();
         String finalMessage = usePrefix ? prefix + " " + message : message;
-        Bukkit.broadcast(MiniMessage.miniMessage().deserialize(finalMessage));
+        Bukkit.broadcast(MiniMessage(finalMessage));
     }
     public static void broadcast(String message) {
-        Bukkit.broadcast(MiniMessage.miniMessage().deserialize(message));
+        Bukkit.broadcast(MiniMessage(message));
     }
     public static void sendMiniMessage(Player player, String message) {
-        player.sendMessage(MiniMessage.miniMessage().deserialize(message));
+        player.sendMessage(MiniMessage(message));
     }
     public static void sendMiniMessageAsync(Player player, String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(SkyboxEngine.getInstance(),() -> player.sendMessage(MiniMessage.miniMessage().deserialize(message)));
+        Bukkit.getScheduler().runTaskAsynchronously(SkyboxEngine.getInstance(),() -> player.sendMessage(MiniMessage(message)));
     }
 
     public static void sendMiniMessage(Player player, boolean usePrefix, String message) {
         String prefix = SkyboxEngine.getConfigInstance().getPrefix();
         String finalMessage = usePrefix ? prefix + " " + message : message;
-        player.sendMessage(MiniMessage.miniMessage().deserialize(finalMessage));
+        player.sendMessage(MiniMessage(finalMessage));
     }
 
     public static void sendMiniMessageAsync(Player player, boolean usePrefix, String message) {
         Bukkit.getScheduler().runTaskAsynchronously(SkyboxEngine.getInstance(),() -> {
             String prefix = SkyboxEngine.getConfigInstance().getPrefix();
             String finalMessage = usePrefix ? prefix + " " + message : message;
-            player.sendMessage(MiniMessage.miniMessage().deserialize(finalMessage));
+            player.sendMessage(MiniMessage(finalMessage));
         });
     }
     public static void sendMiniMessage(CommandSender sender, String message) {
-        sender.sendMessage(MiniMessage.miniMessage().deserialize(message));
+        sender.sendMessage(MiniMessage(message));
     }
 
     public static void sendMiniMessageAsync(CommandSender sender, String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(SkyboxEngine.getInstance(),() -> sender.sendMessage(MiniMessage.miniMessage().deserialize(message)));
+        Bukkit.getScheduler().runTaskAsynchronously(SkyboxEngine.getInstance(),() -> sender.sendMessage(MiniMessage(message)));
     }
     public static void sendMiniMessage(CommandSender sender, boolean usePrefix, String message) {
         String prefix = SkyboxEngine.getConfigInstance().getPrefix();
         String finalMessage = usePrefix ? prefix + " " + message : message;
-        sender.sendMessage(MiniMessage.miniMessage().deserialize(finalMessage));
+        sender.sendMessage(MiniMessage(finalMessage));
     }
     public static void sendMiniMessageAsync(CommandSender sender, boolean usePrefix, String message) {
         Bukkit.getScheduler().runTaskAsynchronously(SkyboxEngine.getInstance(),() -> {
             String prefix = SkyboxEngine.getConfigInstance().getPrefix();
             String finalMessage = usePrefix ? prefix + " " + message : message;
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(finalMessage));
+            sender.sendMessage(MiniMessage(finalMessage));
         });
     }
 
     public static Component MiniMessage(String message) {
-        return MiniMessage.miniMessage().deserialize(message);
+        return net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(
+                message,
+                Placeholder.parsed("accent", miniColor(SkyboxEngine.getConfigInstance().getAccentColor())),
+                Placeholder.parsed("base",miniColor(SkyboxEngine.getConfigInstance().getBaseColor()))
+                );
+    }
+
+    public static String miniColor(String color) {
+        return "<color:" + color + ">";
     }
 
     public static String convertLegacyToMiniMessage(String legacyText) {

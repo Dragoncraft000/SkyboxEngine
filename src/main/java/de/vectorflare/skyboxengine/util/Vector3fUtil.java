@@ -1,4 +1,4 @@
-package me.dragoncraft.skyboxengine.util;
+package de.vectorflare.skyboxengine.util;
 
 import com.github.retrooper.packetevents.util.Vector3f;
 import org.bukkit.Location;

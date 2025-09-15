@@ -1,16 +1,17 @@
-package me.dragoncraft.skyboxengine;
+package de.vectorflare.skyboxengine;
 
 import com.github.retrooper.packetevents.PacketEvents;
+import de.vectorflare.skyboxengine.listener.MainListener;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import lombok.Getter;
 import lombok.Setter;
-import me.dragoncraft.skyboxengine.commands.MainCommand;
-import me.dragoncraft.skyboxengine.config.ConfigManager;
-import me.dragoncraft.skyboxengine.config.Settings;
-import me.dragoncraft.skyboxengine.listener.BiomeSkyboxListener;
-import me.dragoncraft.skyboxengine.listener.WorldSkyboxListener;
-import me.dragoncraft.skyboxengine.manager.PlayerSkyboxManager;
+import de.vectorflare.skyboxengine.commands.MainCommand;
+import de.vectorflare.skyboxengine.config.ConfigManager;
+import de.vectorflare.skyboxengine.config.Settings;
+import de.vectorflare.skyboxengine.listener.BiomeSkyboxListener;
+import de.vectorflare.skyboxengine.listener.WorldSkyboxListener;
+import de.vectorflare.skyboxengine.manager.PlayerSkyboxManager;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
@@ -101,6 +102,7 @@ public final class SkyboxEngine extends JavaPlugin {
     }
 
     private void registerListeners() {
+        registerListener(new MainListener());
         registerListener(new WorldSkyboxListener());
         registerListener(new BiomeSkyboxListener());
     }

@@ -1,4 +1,4 @@
-package me.dragoncraft.skyboxengine.util;
+package de.vectorflare.skyboxengine.util;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerCamera;

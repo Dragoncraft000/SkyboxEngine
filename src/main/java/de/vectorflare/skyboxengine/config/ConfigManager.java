@@ -1,9 +1,9 @@
-package me.dragoncraft.skyboxengine.config;
+package de.vectorflare.skyboxengine.config;
 
 import de.exlll.configlib.YamlConfigurationProperties;
 import de.exlll.configlib.YamlConfigurations;
+import de.vectorflare.skyboxengine.SkyboxEngine;
 import lombok.Getter;
-import me.dragoncraft.skyboxengine.SkyboxEngine;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -54,20 +54,34 @@ public class ConfigManager {
     public void reload() {
         settings = YamlConfigurations.load(new File(plugin.getDataFolder(), "config.yml").toPath(), Settings.class,createConfigProperties());
         SkyboxEngine.setConfigInstance(settings);
+        SkyboxEngine.info("Loaded " + settings.getSkyboxRegistry().size() + " registered skyboxes");
         SkyboxEngine.info("Loaded " + settings.getDimensionSkyboxes().size() + " dimension overrides");
-        settings.getDimensionSkyboxes().forEach((key,value) -> {
-            SkyboxEngine.info(" - " + key + " -> " + value.getSkyboxId() + (value.isRedChannel_time() ? " (Time Sync)" : ""));
-        });
         SkyboxEngine.info("Loaded " + settings.getBiomeSkyboxes().size() + " biome overrides");
-        settings.getBiomeSkyboxes().forEach((key,value) -> {
-            SkyboxEngine.info(" - " + key + " -> " + value.getSkyboxId() + (value.isRedChannel_time() ? " (Time Sync)" : ""));
-        });
+
+
+    }
+
+    public static Settings.SkyboxSettings getSkyboxSettings(String id) {
+        if (!SkyboxEngine.getConfigInstance().getSkyboxRegistry().containsKey(id)) {
+            return null;
+        }
+        return SkyboxEngine.getConfigInstance().getSkyboxRegistry().get(id);
+    }
+
+    public static Settings.SkyboxSettings getDefaultSkybox() {
+        String defaultSkybox = SkyboxEngine.getConfigInstance().getDefaultSkybox();
+        if (defaultSkybox == null) {
+            return  null;
+        }
+        if (SkyboxEngine.getConfigInstance().getDefaultSkybox().isBlank()) {
+            return null;
+        }
+        return getSkyboxSettings(defaultSkybox);
     }
 
     public <T> T loadYamlConfiguration(File file, Class<T> clazz) {
         return YamlConfigurations.load(file.toPath(), clazz, createConfigProperties());
     }
-
 
     public <T> void saveYamlConfiguration(File file, T configuration) {
         YamlConfigurations.save(file.toPath(), (Class<T>) configuration.getClass(), configuration, createConfigProperties());

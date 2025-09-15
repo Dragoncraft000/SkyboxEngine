@@ -31,7 +31,7 @@ dependencies {
 }
 
 
-group = "me.dragoncraft"
+group = "de.vectorflare"
 version = "0.1"
 description = "Create custom skyboxes for each dimension"
 

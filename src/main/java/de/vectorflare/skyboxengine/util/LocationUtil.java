@@ -1,4 +1,4 @@
-package me.dragoncraft.skyboxengine.util;
+package de.vectorflare.skyboxengine.util;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
