@@ -1,6 +1,7 @@
 package de.vectorflare.skyboxengine;
 
 import com.github.retrooper.packetevents.PacketEvents;
+import de.vectorflare.skyboxengine.commands.SkyboxCommands;
 import de.vectorflare.skyboxengine.listener.MainListener;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
@@ -35,6 +36,7 @@ public final class SkyboxEngine extends JavaPlugin {
     @Getter
     private static PlayerSkyboxManager playerSkyboxManager;
 
+    static SkyboxAPI api;
 
     @Override
     public void onLoad() {
@@ -98,6 +100,7 @@ public final class SkyboxEngine extends JavaPlugin {
     }
 
     private void registerCommands() {
+        new SkyboxCommands();
         new MainCommand();
     }
 

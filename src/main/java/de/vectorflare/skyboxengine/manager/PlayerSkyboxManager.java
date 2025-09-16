@@ -37,7 +37,7 @@ public class PlayerSkyboxManager {
     public void recalculateSkyboxes() {
         BiomeSkyboxListener.retrackBiomes();
         BiomeSkyboxListener.checkBiomeChanges();
-        WorldSkyboxListener.checkBiomeChanges();
+        WorldSkyboxListener.checkWorldChanges();
         for (PlayerSkyboxData data : playerSkyboxes.values()) {
             data.addDefaultSkybox();
         }

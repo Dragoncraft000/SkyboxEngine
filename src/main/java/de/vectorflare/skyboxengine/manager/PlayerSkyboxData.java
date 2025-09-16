@@ -2,6 +2,7 @@ package de.vectorflare.skyboxengine.manager;
 
 import de.vectorflare.skyboxengine.SkyboxEngine;
 import de.vectorflare.skyboxengine.config.ConfigManager;
+import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.skybox.ActiveSkybox;
 import de.vectorflare.skyboxengine.skybox.PlayerSkybox;
 import de.vectorflare.skyboxengine.skybox.SkyboxReason;
@@ -48,6 +49,17 @@ public class PlayerSkyboxData {
         playerSkyboxes.remove(skybox);
         changeRenderedPlayerSkybox();
     }
+
+    public void removeSkybox(Settings.SkyboxSettings settings) {
+        PriorityQueue<ActiveSkybox> duplicate = new PriorityQueue<>(playerSkyboxes);
+        duplicate.forEach((skybox -> {
+            if (skybox.skybox.equals(settings)) {
+                playerSkyboxes.remove(skybox);
+            }
+        }));
+        changeRenderedPlayerSkybox();
+    }
+
     public void clearActiveSkyboxes(ActiveSkybox skybox) {
         playerSkyboxes.clear();
         changeRenderedPlayerSkybox();
@@ -68,6 +80,10 @@ public class PlayerSkyboxData {
     }
 
     public void changeRenderedPlayerSkybox() {
+        changeRenderedPlayerSkybox(false);
+    }
+
+    public void changeRenderedPlayerSkybox(boolean force) {
         ActiveSkybox skybox = playerSkyboxes.peek();
 
 
@@ -80,7 +96,7 @@ public class PlayerSkyboxData {
             return;
         }
         // nothing to do rendered Skybox and new Skybox and new skybox have the same settings
-        if (renderedPlayerSkybox != null && skybox.skybox == renderedPlayerSkybox.getSettings()) {
+        if (!force && renderedPlayerSkybox != null && skybox.skybox == renderedPlayerSkybox.getSettings()) {
             return;
         }
         // Clear Old Skybox if it exists

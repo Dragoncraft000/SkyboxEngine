@@ -38,4 +38,16 @@ public class ActiveSkybox implements Comparable<ActiveSkybox> {
         return Integer.compare(this.priority, o.priority);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ActiveSkybox)) {
+            return false;
+        }
+        ActiveSkybox c = (ActiveSkybox) o;
+        return c.skybox == this.skybox;
+    }
+
 }

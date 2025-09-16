@@ -24,7 +24,19 @@ public class MainCommand {
 
                             SkyboxEngine.getPlayerSkyboxManager().recalculateSkyboxes();
                         })
-                ).register();
+                )
+                .withSubcommand(SkyboxCommands.getInfoCommand()).withPermission("skyboxengine.command.info")
+                .withSubcommand(SkyboxCommands.getEnableCommand()).withPermission("skyboxengine.command.enable")
+                .withSubcommand(SkyboxCommands.getDisableCommand()).withPermission("skyboxengine.command.disable")
+                .withPermission("skyboxengine.command")
+                .executes((sender, args) -> {
+                    TextOutputUtil.sendMiniMessage(sender,true,"Hello and thanks for using my plugin!");
+                    TextOutputUtil.sendMiniMessage(sender,"<base>This Plugin only works together with a resource pack to supply the skyboxes. You can take a look at <accent>this<base> repository to help you get started with creating your own custom skyboxes.");
+                    TextOutputUtil.sendMiniMessage(sender,"<base>You can register skybox effects through the config");
+                    String credits = "<hover:show_text:'Click for more Information'><click:open_url:https://vectorflare.de><gradient:#AD0D2D:#EF5E2D>Dragoncraft</gradient> / <gradient:#7294ef:#434d86>Vectorflare</gradient></click>";
+                    TextOutputUtil.sendMiniMessage(sender,"  <base>- <accent>" + credits);
+                })
+                .register();
 
 
 

@@ -2,6 +2,7 @@ package de.vectorflare.skyboxengine.config;
 
 import de.exlll.configlib.Comment;
 import de.exlll.configlib.Configuration;
+import de.exlll.configlib.Ignore;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Map;
 public final class Settings {
 
     private String prefix = "<base>[<gradient:aqua:light_purple>SkyboxEngine</gradient><base>]";
-    private String baseColor = "gray";
+    private String baseColor = "#aaa8aa";
     private String accentColor = "aqua";
 
     @Comment({"1 -> Player skybox changes", "2 -> Skybox Time Color Data"})
@@ -46,6 +47,8 @@ public final class Settings {
     @Getter
     public static class SkyboxSettings {
         private String skyboxId = "";
+        @Ignore
+        private String registryName = "";
         private Map<String,Boolean> flags;
 
         public boolean getFlag(String key) {
