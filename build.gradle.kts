@@ -22,8 +22,8 @@ repositories {
 dependencies {
     compileOnly(libs.paper.api)
     implementation(libs.commandapi)
-    compileOnly(libs.configlib.yaml)
-    compileOnly(libs.configlib.paper)
+    implementation(libs.configlib.yaml)
+    implementation(libs.configlib.paper)
     implementation(libs.entitylib)
     compileOnly(libs.lombok)
     compileOnly(libs.packetevents)
@@ -64,14 +64,10 @@ tasks {
 
     processResources {
         inputs.property("version", project.version)
-        inputs.property("configlibVersion", libs.versions.configlib.get())
-        inputs.property("commandapiversion", libs.versions.commandapi.get())
 
         filesMatching("plugin.yml") {
             expand(
                     "version" to rootProject.version,
-                    "configlibVersion" to libs.versions.configlib.get(),
-                    "commandapiversion" to libs.versions.commandapi.get()
             )
         }
     }
