@@ -60,7 +60,7 @@ public class PlayerSkyboxData {
         changeRenderedPlayerSkybox();
     }
 
-    public void clearActiveSkyboxes(ActiveSkybox skybox) {
+    public void clearActiveSkyboxes() {
         playerSkyboxes.clear();
         changeRenderedPlayerSkybox();
     }

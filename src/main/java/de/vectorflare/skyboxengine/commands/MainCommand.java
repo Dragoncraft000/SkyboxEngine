@@ -28,6 +28,7 @@ public class MainCommand {
                 .withSubcommand(SkyboxCommands.getInfoCommand()).withPermission("skyboxengine.command.info")
                 .withSubcommand(SkyboxCommands.getEnableCommand()).withPermission("skyboxengine.command.enable")
                 .withSubcommand(SkyboxCommands.getDisableCommand()).withPermission("skyboxengine.command.disable")
+                .withSubcommand(SkyboxCommands.getReplaceCommand()).withPermission("skyboxengine.command.replace")
                 .withPermission("skyboxengine.command")
                 .executes((sender, args) -> {
                     TextOutputUtil.sendMiniMessage(sender,true,"Hello and thanks for using my plugin!");

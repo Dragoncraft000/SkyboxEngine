@@ -97,6 +97,38 @@ public class SkyboxCommands {
                 });
     }
 
+
+    public static CommandAPICommand getReplaceCommand() {
+        return new CommandAPICommand("replace")
+                .withArguments(new PlayerArgument("target"))
+                .withArguments(new StringArgument("skybox").replaceSuggestions(ArgumentSuggestions.strings(getRegisteredSkyboxes())))
+                .withOptionalArguments(new IntegerArgument("priority"))
+                .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
+                .executes((commandSender, commandArguments) -> {
+                    Player p = commandArguments.getUnchecked("target");
+                    String skybox = commandArguments.getUnchecked("skybox");
+                    int priority = commandArguments.getOrDefaultUnchecked("priority",SkyboxEngine.getConfigInstance().getCommandSkyboxPriority());
+                    if (priority == -1) {
+                        priority = SkyboxEngine.getConfigInstance().getCommandSkyboxPriority();
+                    }
+                    Settings.SkyboxSettings settings = ConfigManager.getSkyboxSettings(skybox);
+                    if (settings == null) {
+                        TextOutputUtil.sendMiniMessage(commandSender,true,"<red>Please specify a valid skybox");
+                    }
+
+
+                    PlayerSkyboxData data = SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(p);
+                    for (ActiveSkybox as : data.playerSkyboxes.toArray(ActiveSkybox[]::new)) {
+                        if (as.reason == SkyboxReason.COMMAND || as.reason == SkyboxReason.CUSTOM) {
+                            data.removeActiveSkybox(new ActiveSkybox(as.skybox, SkyboxReason.COMMAND, 1));
+                        }
+                    }
+
+                    data.addActivePlayerSkybox(new ActiveSkybox(settings, SkyboxReason.COMMAND, priority));
+                    TextOutputUtil.sendMiniMessage(commandSender,true,"<base>Enabled Skybox <accent>" + skybox + "<base> for <accent> " + p.getName());
+                });
+    }
+
     public static CommandAPICommand getDisableCommand() {
         return new CommandAPICommand("disable")
                 .withArguments(new PlayerArgument("target"))
