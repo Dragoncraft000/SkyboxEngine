@@ -1,11 +1,11 @@
 [versions]
 paper-api = "1.21.4-R0.1-SNAPSHOT"
 lombok = "1.18.34"
-commandapi = "9.7.0"
-configlib = "4.5.0"
+commandapi = "10.1.2"
+configlib = "4.6.0"
 shadow = "8.3.0"
 run-paper = "2.3.0"
-packetevents = "2.7.0"
+packetevents = "2.9.5"
 entitylib = "2.4.11-SNAPSHOT"
 
 [libraries]

@@ -32,7 +32,7 @@ dependencies {
 
 
 group = "de.vectorflare"
-version = "0.1"
+version = "0.2"
 description = "Create custom skyboxes for each dimension"
 
 tasks {
