@@ -16,13 +16,6 @@ import java.util.Objects;
 
 public class SkyboxCommands {
 
-
-    public SkyboxCommands() {
-
-    }
-
-
-
     public static String[] getActiveSkyboxes(Player player) {
         return SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player).playerSkyboxes.stream().map(s -> SkyboxEngine.getConfigInstance().getSkyboxRegistry().entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), s.skybox)).map(Map.Entry::getKey).findFirst().orElse(null)).toArray(String[]::new);
     }

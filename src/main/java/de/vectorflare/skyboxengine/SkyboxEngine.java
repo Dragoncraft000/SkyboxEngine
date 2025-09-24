@@ -1,18 +1,17 @@
 package de.vectorflare.skyboxengine;
 
 import com.github.retrooper.packetevents.PacketEvents;
-import de.vectorflare.skyboxengine.commands.SkyboxCommands;
-import de.vectorflare.skyboxengine.listener.MainListener;
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
-import lombok.Getter;
-import lombok.Setter;
 import de.vectorflare.skyboxengine.commands.MainCommand;
 import de.vectorflare.skyboxengine.config.ConfigManager;
 import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.listener.BiomeSkyboxListener;
+import de.vectorflare.skyboxengine.listener.MainListener;
 import de.vectorflare.skyboxengine.listener.WorldSkyboxListener;
 import de.vectorflare.skyboxengine.manager.PlayerSkyboxManager;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import lombok.Getter;
+import lombok.Setter;
 import me.tofaa.entitylib.APIConfig;
 import me.tofaa.entitylib.EntityLib;
 import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
@@ -76,7 +75,7 @@ public final class SkyboxEngine extends JavaPlugin {
 
         instance = this;
         configManager = new ConfigManager(this);
-
+        api = new SkyboxAPI();
         if (!loadConfig()) {
             instance.getServer().getPluginManager().disablePlugin(instance);
             return;
@@ -100,7 +99,6 @@ public final class SkyboxEngine extends JavaPlugin {
     }
 
     private void registerCommands() {
-        new SkyboxCommands();
         new MainCommand();
     }
 
