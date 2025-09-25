@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -28,10 +29,10 @@ public class BiomeSkyboxListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         lastPlayerBiomes.remove(event.getPlayer().getUniqueId());
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event) {
         lastPlayerBiomes.put(event.getPlayer().getUniqueId(),getPlayerBiome(event.getPlayer()));
-        checkBiomeSkyboxChange(event.getPlayer(), getPlayerBiome(event.getPlayer()),getPlayerBiome(event.getPlayer()));
+        checkBiomeSkyboxChange(event.getPlayer(), getPlayerBiome(event.getPlayer()),null);
     }
 
     public static Biome getPlayerBiome(Player player) {
