@@ -10,6 +10,7 @@ import de.vectorflare.skyboxengine.listener.WorldSkyboxListener;
 import de.vectorflare.skyboxengine.manager.PlayerSkyboxManager;
 import de.vectorflare.skyboxengine.tintcolor.TintProviders;
 import de.vectorflare.skyboxengine.tintcolor.premade.LowPrecisionTimeProvider;
+import de.vectorflare.skyboxengine.tintcolor.premade.PlayerHeightProvider;
 import de.vectorflare.skyboxengine.tintcolor.premade.TimeProvider;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
@@ -97,6 +98,7 @@ public final class SkyboxEngine extends JavaPlugin {
 
         tintProviders.registerTintProvider(new TimeProvider());
         tintProviders.registerTintProvider(new LowPrecisionTimeProvider());
+        tintProviders.registerTintProvider(new PlayerHeightProvider());
 
         registerCommands();
         registerListeners();

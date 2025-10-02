@@ -31,7 +31,7 @@ public class ConfigManager {
             return Optional.empty();
         }
         try {
-            settings = YamlConfigurations.load(
+            settings = YamlConfigurations.update(
                     settingsFile.toPath(),
                     Settings.class,
                     properties
