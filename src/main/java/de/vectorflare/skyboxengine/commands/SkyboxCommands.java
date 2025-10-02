@@ -40,11 +40,10 @@ public class SkyboxCommands {
                     TextOutputUtil.sendMiniMessage(commandSender,true,"<base>Showing Info for <accent>" + skybox);
 
                     TextOutputUtil.sendMiniMessage(commandSender,false,"  <base>Shader Model: <accent>" + settings.getSkyboxId());
-                    if (settings.getFlags() != null && !settings.getFlags().isEmpty()) {
-                        TextOutputUtil.sendMiniMessage(commandSender, "  <base>Flags:");
-                        for (String key : settings.getFlags().keySet()) {
-                            TextOutputUtil.sendMiniMessage(commandSender, "   <base>- <accent>" + key + "<base> -><accent> " + settings.getFlag(key));
-                        }
+                    if (settings.getTintProvider() != null && !settings.getTintProvider().isEmpty()) {
+                        TextOutputUtil.sendMiniMessage(commandSender, "  <base>Tint Provider: <accent>" + settings.getTintProvider());
+                    } else {
+                        TextOutputUtil.sendMiniMessage(commandSender, "  <base>Tint Provider: <accent>not specified");
                     }
 
                     //TextOutputUtil.sendMiniMessage(commandSender,true,"<base> - " + settings.ge);

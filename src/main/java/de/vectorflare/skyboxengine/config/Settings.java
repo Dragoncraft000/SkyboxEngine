@@ -49,14 +49,7 @@ public final class Settings {
         private String skyboxId = "";
         @Ignore
         private String registryName = "";
-        private Map<String,Boolean> flags;
-
-        public boolean getFlag(String key) {
-            if (flags == null) {
-                return false;
-            }
-            return flags.getOrDefault(key,false);
-        }
+        private String tintProvider = "";
 
 
     }

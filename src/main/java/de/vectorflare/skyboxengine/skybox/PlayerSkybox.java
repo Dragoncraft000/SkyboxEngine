@@ -2,9 +2,11 @@ package de.vectorflare.skyboxengine.skybox;
 
 import de.vectorflare.skyboxengine.SkyboxEngine;
 import de.vectorflare.skyboxengine.config.Settings;
+import de.vectorflare.skyboxengine.tintcolor.TintProvider;
 import de.vectorflare.skyboxengine.util.ConversionUtils;
 import de.vectorflare.skyboxengine.util.ItemDisplays;
 import lombok.Getter;
+import lombok.Setter;
 import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -17,6 +19,10 @@ public class PlayerSkybox {
     private Settings.SkyboxSettings settings;
 
     private WrapperEntity skyboxEntity;
+
+    @Setter
+    private TintProvider tintProvider;
+
 
     private int getBaseSize() {
         return Math.min(player.getClientViewDistance(),player.getViewDistance()) * 16;
@@ -40,6 +46,9 @@ public class PlayerSkybox {
     public PlayerSkybox(Player player, Settings.SkyboxSettings settings) {
         this.player = player;
         this.settings = settings;
+
+        String tintProviderKey = settings.getTintProvider();
+        this.tintProvider =SkyboxEngine.getTintProviders().getTintProvider(tintProviderKey);
     }
 
     public void createSkybox() {
@@ -68,41 +77,15 @@ public class PlayerSkybox {
             createSkybox();
             return;
         }
-        if (settings.getFlag("encodeTime")) writeTime();
-        if (settings.getFlag("encodePreciseTime")) writePreciseTime();
+
+        if (tintProvider != null) {
+            ItemDisplays.setDisplayColor(skyboxEntity, tintProvider.getTintColor(player,settings));
+        }
         Location tp = player.getLocation();
         tp.setPitch(0);
         tp.setYaw(0);
         ItemDisplays.teleportDisplay(skyboxEntity,tp);
     }
-
-    public void writeTime() {
-        long time = player.getWorld().getTime();
-        if (time % 20 != 0) {
-            return;
-        }
-        int compressed = (int) (((time % 24000f) / 24000f) * 255f);
-        Color color = Color.fromRGB(compressed, 0, 0);
-        if (SkyboxEngine.getConfigInstance().getDebugLogLevel() > 1) {
-            SkyboxEngine.info("Writing Time Color Data r: " + color.getRed() + " g: " + color.getGreen() + " b: " + color.getBlue() + " for player " + player.getName());
-        }
-        ItemDisplays.setDisplayColor(skyboxEntity, color);
-    }
-    public void writePreciseTime() {
-        long time = player.getWorld().getTime();
-        int compressed = (int) ((time % 24000));
-        int red = compressed / 255;
-        int green = compressed % 255;
-        Color color = Color.fromRGB(red,green,0);
-        color.setRed(red);
-        color.setGreen(green);
-        if (SkyboxEngine.getConfigInstance().getDebugLogLevel() > 1) {
-            SkyboxEngine.info("Writing Time Color Data r: " + color.getRed() + " g: " + color.getGreen() + " b: " + color.getBlue() + " for player " + player.getName());
-        }
-
-        ItemDisplays.setDisplayColor(skyboxEntity, color);
-    }
-
 
     public void removeSkybox() {
         removeSkybox(0);

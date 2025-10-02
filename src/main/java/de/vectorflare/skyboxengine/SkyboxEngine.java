@@ -8,6 +8,9 @@ import de.vectorflare.skyboxengine.listener.BiomeSkyboxListener;
 import de.vectorflare.skyboxengine.listener.MainListener;
 import de.vectorflare.skyboxengine.listener.WorldSkyboxListener;
 import de.vectorflare.skyboxengine.manager.PlayerSkyboxManager;
+import de.vectorflare.skyboxengine.tintcolor.TintProviders;
+import de.vectorflare.skyboxengine.tintcolor.premade.LowPrecisionTimeProvider;
+import de.vectorflare.skyboxengine.tintcolor.premade.TimeProvider;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import lombok.Getter;
@@ -34,6 +37,9 @@ public final class SkyboxEngine extends JavaPlugin {
 
     @Getter
     private static PlayerSkyboxManager playerSkyboxManager;
+
+    @Getter
+    private static TintProviders tintProviders;
 
     static SkyboxAPI api;
 
@@ -87,6 +93,10 @@ public final class SkyboxEngine extends JavaPlugin {
         EntityLib.init(platform, settings);
 
         playerSkyboxManager = new PlayerSkyboxManager();
+        tintProviders = new TintProviders();
+
+        tintProviders.registerTintProvider(new TimeProvider());
+        tintProviders.registerTintProvider(new LowPrecisionTimeProvider());
 
         registerCommands();
         registerListeners();

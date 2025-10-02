@@ -4,6 +4,7 @@ import de.vectorflare.skyboxengine.config.ConfigManager;
 import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.skybox.ActiveSkybox;
 import de.vectorflare.skyboxengine.skybox.SkyboxReason;
+import de.vectorflare.skyboxengine.tintcolor.TintProvider;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -146,4 +147,13 @@ public class SkyboxAPI {
     public void removeSkyboxFromPlayer(Player player, String skybox) {
         SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player).removeActiveSkybox(new ActiveSkybox(getSkyboxSettings(skybox)));
     }
+
+    /**
+     * Registers a new tint provider for skybox models. This should be called before players are able to join the server to ensure the provider is available on join.
+     * @param tintProvider The tint provider instance you want to register
+     */
+    public void registerTintProvider(TintProvider tintProvider) {
+        SkyboxEngine.getTintProviders().registerTintProvider(tintProvider);
+    }
+
 }
