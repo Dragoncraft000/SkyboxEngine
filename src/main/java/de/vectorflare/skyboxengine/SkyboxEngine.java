@@ -90,7 +90,7 @@ public final class SkyboxEngine extends JavaPlugin {
 
         CommandAPI.onEnable();
         SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
-        APIConfig settings = new APIConfig(PacketEvents.getAPI()).tickTickables().trackPlatformEntities().useBstats().usePlatformLogger();
+        APIConfig settings = new APIConfig(PacketEvents.getAPI());
         EntityLib.init(platform, settings);
 
         playerSkyboxManager = new PlayerSkyboxManager();
