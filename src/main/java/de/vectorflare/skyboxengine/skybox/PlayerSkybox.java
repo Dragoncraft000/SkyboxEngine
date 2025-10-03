@@ -16,7 +16,7 @@ public class PlayerSkybox {
 
     private final Player player;
     @Getter
-    private Settings.SkyboxSettings settings;
+    private final Settings.SkyboxSettings settings;
 
     private WrapperEntity skyboxEntity;
 
@@ -81,10 +81,7 @@ public class PlayerSkybox {
         if (tintProvider != null) {
             ItemDisplays.setDisplayColor(skyboxEntity, tintProvider.getTintColor(player,settings));
         }
-        Location tp = player.getLocation();
-        tp.setPitch(0);
-        tp.setYaw(0);
-        ItemDisplays.teleportDisplay(skyboxEntity,tp);
+        ItemDisplays.teleportDisplay(skyboxEntity,spawn);
     }
 
     public void removeSkybox() {

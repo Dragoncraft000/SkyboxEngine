@@ -32,7 +32,7 @@ dependencies {
 
 
 group = "de.vectorflare"
-version = "1.0.1"
+version = "1.1"
 description = "Create custom skyboxes for each dimension"
 
 tasks {
@@ -47,6 +47,7 @@ tasks {
         manifest {
             attributes["Implementation-Version"] = rootProject.version
         }
+        relocate("me.tofaa.entitylib", "de.vectorflare.skyboxengine.shaded.entitylib")
     }
 
     assemble {

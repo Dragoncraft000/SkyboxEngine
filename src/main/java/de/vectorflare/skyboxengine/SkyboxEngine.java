@@ -96,9 +96,9 @@ public final class SkyboxEngine extends JavaPlugin {
         playerSkyboxManager = new PlayerSkyboxManager();
         tintProviders = new TintProviders();
 
-        tintProviders.registerTintProvider(new TimeProvider());
-        tintProviders.registerTintProvider(new LowPrecisionTimeProvider());
-        tintProviders.registerTintProvider(new PlayerHeightProvider());
+        SkyboxAPI.getAPI().registerTintProvider(new TimeProvider());
+        SkyboxAPI.getAPI().registerTintProvider(new LowPrecisionTimeProvider());
+        SkyboxAPI.getAPI().registerTintProvider(new PlayerHeightProvider());
 
         registerCommands();
         registerListeners();

@@ -14,7 +14,7 @@ public class PlayerSkyboxManager {
 
     private final HashMap<UUID, PlayerSkyboxData> playerSkyboxes = new HashMap<>();
 
-    private BukkitTask updateTask = Bukkit.getScheduler().runTaskTimer(SkyboxEngine.getInstance(),this::tickHandler,0,1);
+    private final BukkitTask updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(SkyboxEngine.getInstance(),this::tickHandler,0,1);
 
 
     public PlayerSkyboxData getSkyboxData(Player player) {
