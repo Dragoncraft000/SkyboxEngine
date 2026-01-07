@@ -11,17 +11,18 @@ java {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.codemc.io/repository/maven-releases/")
-    maven("https://maven.evokegames.gg/snapshots")
+   // maven("https://maven.evokegames.gg/snapshots")
     maven("https://jitpack.io")
+
 }
 
 dependencies {
     compileOnly(libs.paper.api)
-    implementation(libs.commandapi)
+    implementation(libs.commandapi.shade)
     implementation(libs.configlib.yaml)
     implementation(libs.configlib.paper)
     implementation(libs.entitylib)
@@ -46,6 +47,7 @@ tasks {
 
         manifest {
             attributes["Implementation-Version"] = rootProject.version
+            attributes["paperweight-mappings-namespace"] = "mojang"
         }
         relocate("me.tofaa.entitylib", "de.vectorflare.skyboxengine.shaded.entitylib")
     }
@@ -88,14 +90,14 @@ tasks {
 
     runServer {
         minecraftVersion(version)
-        runDirectory = rootDir.resolve("run/test")
+        runDirectory = rootDir.resolve("run/$version/")
 
         javaLauncher = project.javaToolchains.launcherFor {
             languageVersion = javaVersion
         }
 
         downloadPlugins {
-            url("https://github.com/retrooper/packetevents/releases/download/v2.7.0/packetevents-spigot-2.7.0.jar")
+            url("https://github.com/retrooper/packetevents/releases/download/v2.11.1/packetevents-spigot-2.11.1.jar")
            // url("https://download.luckperms.net/1556/bukkit/loader/LuckPerms-Bukkit-5.4.141.jar")
         }
 

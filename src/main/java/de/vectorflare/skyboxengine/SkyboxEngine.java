@@ -14,7 +14,7 @@ import de.vectorflare.skyboxengine.tintcolor.premade.LowPrecisionTimeProvider;
 import de.vectorflare.skyboxengine.tintcolor.premade.PlayerHeightProvider;
 import de.vectorflare.skyboxengine.tintcolor.premade.TimeProvider;
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.CommandAPIPaperConfig;
 import lombok.Getter;
 import lombok.Setter;
 import me.tofaa.entitylib.APIConfig;
@@ -47,10 +47,9 @@ public final class SkyboxEngine extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        CommandAPIBukkitConfig commandAPIBukkitConfig = new CommandAPIBukkitConfig(this).silentLogs(true);
-        commandAPIBukkitConfig.skipReloadDatapacks(true);
+        CommandAPIPaperConfig commandAPIBukkitConfig = new CommandAPIPaperConfig(this).silentLogs(true);
 
-        CommandAPI.onLoad(commandAPIBukkitConfig.verboseOutput(false));
+        CommandAPI.onLoad(commandAPIBukkitConfig);
     }
 
     public static void info(String message) {

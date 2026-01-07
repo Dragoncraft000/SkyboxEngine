@@ -52,7 +52,7 @@ public class SkyboxCommands {
 
     public static CommandAPICommand getEnableCommand() {
         return new CommandAPICommand("enable")
-                .withArguments(new PlayerArgument("target"))
+                .withArguments(new EntitySelectorArgument.OnePlayer("target"))
                 .withArguments(new StringArgument("skybox").replaceSuggestions(ArgumentSuggestions.strings(getRegisteredSkyboxes())))
                 .withOptionalArguments(new IntegerArgument("priority"))
                 .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
@@ -92,7 +92,7 @@ public class SkyboxCommands {
 
     public static CommandAPICommand getReplaceCommand() {
         return new CommandAPICommand("replace")
-                .withArguments(new PlayerArgument("target"))
+                .withArguments(new EntitySelectorArgument.OnePlayer("target"))
                 .withArguments(new StringArgument("skybox").replaceSuggestions(ArgumentSuggestions.strings(getRegisteredSkyboxes())))
                 .withOptionalArguments(new IntegerArgument("priority"))
                 .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
@@ -123,7 +123,7 @@ public class SkyboxCommands {
 
     public static CommandAPICommand getDisableCommand() {
         return new CommandAPICommand("disable")
-                .withArguments(new PlayerArgument("target"))
+                .withArguments(new EntitySelectorArgument.OnePlayer("target"))
                 .withArguments(new StringArgument("skybox").replaceSuggestions(ArgumentSuggestions.strings(info -> getActiveSkyboxes(info.previousArgs().getUnchecked("target")))))
                 .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
                 .executes((commandSender, commandArguments) -> {
