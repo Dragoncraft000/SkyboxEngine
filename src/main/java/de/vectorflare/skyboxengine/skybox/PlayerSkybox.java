@@ -31,7 +31,7 @@ public class PlayerSkybox {
         return getBaseSize() * -4;
     }
     public static int getInterpolationDuration() {
-        return 10;
+        return 0;
     }
 
     private NamespacedKey getSkyboxModel() {
@@ -72,7 +72,7 @@ public class PlayerSkybox {
         ItemDisplays.setDisplayTransformationInterpolation(skyboxEntity,getInterpolationDuration());
         ItemDisplays.setDisplayTeleportInterpolation(skyboxEntity,getInterpolationDuration());
         ItemDisplays.setDisplayColor(skyboxEntity,getColor());
-        if (player.getLocation().distance(ConversionUtils.toBukkitLocation(skyboxEntity.getLocation(), player.getWorld())) > 100) {
+        if (player.getLocation().distanceSquared(ConversionUtils.toBukkitLocation(skyboxEntity.getLocation(), player.getWorld())) > Math.pow(getBaseSize() * 0.5,2)) {
             removeSkybox();
             createSkybox();
             return;
