@@ -25,6 +25,37 @@ public class SkyboxCommands {
         return SkyboxEngine.getConfigInstance().getSkyboxRegistry().keySet().toArray(String[]::new);
     }
 
+    public static  CommandAPICommand getToggleCommand() {
+        return new CommandAPICommand("togglevisuals")
+                .withArguments(new EntitySelectorArgument.OnePlayer("target"))
+                .withArguments(new BooleanArgument("toggle"))
+                .executes((p,args) -> {
+                    Player player = args.getUnchecked("target");
+                    if (player == null) {
+                        return;
+                    }
+                    boolean toggle = args.getOrDefaultUnchecked("toggle",true);
+
+                    if (toggle) {
+                        if (SkyboxEngine.getData().disabledSkyboxes.contains(player.getUniqueId())) {
+                            SkyboxEngine.getData().disabledSkyboxes.remove(player.getUniqueId());
+                            SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player).changeRenderedPlayerSkybox(true);
+                            SkyboxEngine.getInstance().saveData();
+                        }
+                        TextOutputUtil.sendMiniMessage(p,true,"Skybox visuals for <accent>" + player.getName() + " <base>have been <accent>enabled");
+                    } else {
+                        if (!SkyboxEngine.getData().disabledSkyboxes.contains(player.getUniqueId())) {
+                            SkyboxEngine.getData().disabledSkyboxes.add(player.getUniqueId());
+                            SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player).changeRenderedPlayerSkybox(true);
+                            SkyboxEngine.getInstance().saveData();
+                        }
+                        TextOutputUtil.sendMiniMessage(p,true,"Skybox visuals for <accent>" + player.getName() + " <base>have been <accent>disabled");
+                    }
+
+                });
+    }
+
+
     public static CommandAPICommand getInfoCommand() {
         return new CommandAPICommand("info")
                 .withArguments(new StringArgument("skybox").replaceSuggestions(ArgumentSuggestions.strings(getRegisteredSkyboxes())))
@@ -35,6 +66,7 @@ public class SkyboxCommands {
                     Settings.SkyboxSettings settings = ConfigManager.getSkyboxSettings(skybox);
                     if (settings == null) {
                         TextOutputUtil.sendMiniMessage(commandSender,true,"<red>Please specify a valid skybox");
+                        return;
                     }
 
                     TextOutputUtil.sendMiniMessage(commandSender,true,"<base>Showing Info for <accent>" + skybox);
@@ -58,6 +90,9 @@ public class SkyboxCommands {
                 .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
                 .executes((commandSender, commandArguments) -> {
                     Player p = commandArguments.getUnchecked("target");
+                    if (p == null) {
+                        return;
+                    }
                     String skybox = commandArguments.getUnchecked("skybox");
                     int priority = commandArguments.getOrDefaultUnchecked("priority",SkyboxEngine.getConfigInstance().getCommandSkyboxPriority());
                     if (priority == -1) {
@@ -98,6 +133,9 @@ public class SkyboxCommands {
                 .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
                 .executes((commandSender, commandArguments) -> {
                     Player p = commandArguments.getUnchecked("target");
+                    if (p == null) {
+                        return;
+                    }
                     String skybox = commandArguments.getUnchecked("skybox");
                     int priority = commandArguments.getOrDefaultUnchecked("priority",SkyboxEngine.getConfigInstance().getCommandSkyboxPriority());
                     if (priority == -1) {
@@ -128,6 +166,9 @@ public class SkyboxCommands {
                 .withOptionalArguments(new GreedyStringArgument("forceCheck").withPermission("skyboxengine.command.force").replaceSuggestions(ArgumentSuggestions.strings(new String[]{"force"})))
                 .executes((commandSender, commandArguments) -> {
                     Player p = commandArguments.getUnchecked("target");
+                    if (p == null) {
+                        return;
+                    }
                     String skybox = commandArguments.getUnchecked("skybox");
                     Settings.SkyboxSettings settings = ConfigManager.getSkyboxSettings(skybox);
                     if (settings == null) {

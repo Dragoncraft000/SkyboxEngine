@@ -29,11 +29,13 @@ public class MainCommand {
                 .withSubcommand(SkyboxCommands.getEnableCommand()).withPermission("skyboxengine.command.enable")
                 .withSubcommand(SkyboxCommands.getDisableCommand()).withPermission("skyboxengine.command.disable")
                 .withSubcommand(SkyboxCommands.getReplaceCommand()).withPermission("skyboxengine.command.replace")
+                .withSubcommand(SkyboxCommands.getToggleCommand()).withPermission("skyboxengine.command.mastertoggle")
                 .withPermission("skyboxengine.command")
                 .executes((sender, args) -> {
                     TextOutputUtil.sendMiniMessage(sender,true,"Hello and thanks for using my plugin!");
                     TextOutputUtil.sendMiniMessage(sender,"<base>This Plugin only works together with a resource pack to supply the skyboxes. You can take a look at <accent><hover:show_text:'Click for more Information'><click:open_url:https://modrinth.com/resourcepack/skyboxtemplate>this resource pack</click></hover><base> to help you get started with creating your own custom skyboxes.");
                     TextOutputUtil.sendMiniMessage(sender,"<base>You can register skybox effects through the config");
+                    TextOutputUtil.sendMiniMessage(sender,"<base>More information can be found on the <accent><hover:show_text:'Click for more Information'><click:open_url:https://github.com/Dragoncraft000/SkyboxEngine/wiki>wiki</click></hover>");
                     String credits = "<hover:show_text:'Click for more Information'><click:open_url:https://vectorflare.de><gradient:#AD0D2D:#EF5E2D>Dragoncraft</gradient> / <gradient:#7294ef:#434d86>Vectorflare</gradient></click>";
                     TextOutputUtil.sendMiniMessage(sender,"  <base>- <accent>" + credits);
                 })

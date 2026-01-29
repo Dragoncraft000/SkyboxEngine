@@ -103,6 +103,10 @@ public class PlayerSkyboxData {
         if (renderedPlayerSkybox != null) {
             renderedPlayerSkybox.removeSkybox(1);
         }
+        // Check if player has skyboxes disabled
+        if (SkyboxEngine.getData().disabledSkyboxes.contains(player.getUniqueId())) {
+            return;
+        }
         // render the new skybox
         renderedPlayerSkybox = new PlayerSkybox(player,skybox.skybox);
         renderedPlayerSkybox.createSkybox();

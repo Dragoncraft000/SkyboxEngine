@@ -1,8 +1,10 @@
 package de.vectorflare.skyboxengine;
 
 import com.github.retrooper.packetevents.PacketEvents;
+import de.exlll.configlib.YamlConfigurations;
 import de.vectorflare.skyboxengine.commands.MainCommand;
 import de.vectorflare.skyboxengine.config.ConfigManager;
+import de.vectorflare.skyboxengine.config.Data;
 import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.listener.BiomeSkyboxListener;
 import de.vectorflare.skyboxengine.listener.MainListener;
@@ -23,6 +25,7 @@ import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -44,6 +47,9 @@ public final class SkyboxEngine extends JavaPlugin {
     private static TintProviders tintProviders;
 
     static SkyboxAPI api;
+
+    @Getter
+    private static Data data;
 
     @Override
     public void onLoad() {
@@ -103,12 +109,19 @@ public final class SkyboxEngine extends JavaPlugin {
 
         registerCommands();
         registerListeners();
+
+        data = YamlConfigurations.update(new File(getDataFolder(),"data.yml").toPath(),Data.class,ConfigManager.createConfigProperties());
     }
 
     @Override
     public void onDisable() {
         getLogger().info("Disabling Skybox Engine");
         CommandAPI.onDisable();
+        saveData();
+    }
+
+    public void saveData() {
+        YamlConfigurations.save(new File(instance.getDataFolder(),"data.yml").toPath(),Data.class,data,ConfigManager.createConfigProperties());
     }
 
     private void registerCommands() {
