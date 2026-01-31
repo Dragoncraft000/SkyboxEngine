@@ -51,6 +51,7 @@ public final class Settings {
         private String registryName = "";
         private String tintProvider = "";
 
+        private boolean useMountMovementSync = false;
 
     }
 

@@ -1,5 +1,6 @@
 package de.vectorflare.skyboxengine.skybox;
 
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSetPassengers;
 import de.vectorflare.skyboxengine.SkyboxEngine;
 import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.tintcolor.TintProvider;
@@ -59,18 +60,20 @@ public class PlayerSkybox {
         ItemDisplays.setDisplayModel(skyboxEntity,getSkyboxModel());
         ItemDisplays.setDisplaySize(skyboxEntity,getSize());
         ItemDisplays.setDisplayRenderDistance(skyboxEntity,1000);
+        ItemDisplays.setDisplayTeleportInterpolation(skyboxEntity,getInterpolationDuration());
         ItemDisplays.setDisplayColor(skyboxEntity,getColor());
+        if (settings.isUseMountMovementSync()) {
+            WrapperPlayServerSetPassengers wrapperPlayServerSetPassengers = new WrapperPlayServerSetPassengers(player.getEntityId(),new int[]{skyboxEntity.getEntityId()});
+            skyboxEntity.sendPacketsToViewers(wrapperPlayServerSetPassengers);
+        }
     }
 
     public void tickSkybox() {
         Location spawn = player.getLocation();
         spawn.setPitch(0);
         spawn.setYaw(0);
-        ItemDisplays.setDisplayModel(skyboxEntity,getSkyboxModel());
         ItemDisplays.setDisplaySize(skyboxEntity,getSize());
-        ItemDisplays.setDisplayRenderDistance(skyboxEntity,1000);
         ItemDisplays.setDisplayTransformationInterpolation(skyboxEntity,getInterpolationDuration());
-        ItemDisplays.setDisplayTeleportInterpolation(skyboxEntity,getInterpolationDuration());
         ItemDisplays.setDisplayColor(skyboxEntity,getColor());
         if (player.getLocation().distanceSquared(ConversionUtils.toBukkitLocation(skyboxEntity.getLocation(), player.getWorld())) > Math.pow(getBaseSize() * 0.5,2)) {
             removeSkybox();
