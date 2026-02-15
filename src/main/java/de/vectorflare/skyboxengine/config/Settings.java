@@ -53,6 +53,16 @@ public final class Settings {
 
         private boolean useMountMovementSync = false;
 
+
+        public SkyboxSettings() {
+
+        }
+        public SkyboxSettings(String skyboxId,String tintProvider,boolean useMountMovementSync) {
+            this.skyboxId = skyboxId;
+            this.tintProvider = tintProvider;
+            this.useMountMovementSync = useMountMovementSync;
+        }
+
     }
 
 }

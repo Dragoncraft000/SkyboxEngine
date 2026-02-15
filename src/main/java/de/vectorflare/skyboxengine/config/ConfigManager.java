@@ -27,6 +27,20 @@ public class ConfigManager {
 
         if (!settingsFile.exists()) {
             settings = new Settings();
+
+            settings.getSkyboxRegistry().put("texture",new Settings.SkyboxSettings("skyboxengine:model_shader_9_texture",null,false));
+            settings.getSkyboxRegistry().put("vortex",new Settings.SkyboxSettings("skyboxengine:model_shader_6",null,false));
+            settings.getSkyboxRegistry().put("ocean",new Settings.SkyboxSettings("skyboxengine:model_shader_5","daytime",false));
+            settings.getSkyboxRegistry().put("raymarching",new Settings.SkyboxSettings("skyboxengine:model_shader_4",null,false));
+            settings.getSkyboxRegistry().put("animation",new Settings.SkyboxSettings("skyboxengine:model_shader_3",null,false));
+            settings.getSkyboxRegistry().put("noise",new Settings.SkyboxSettings("skyboxengine:model_shader_2",null,false));
+            settings.getSkyboxRegistry().put("gradient",new Settings.SkyboxSettings("skyboxengine:model_shader_1",null,false));
+
+            settings.getDimensionSkyboxes().put("minecraft:the_end","vortex");
+            settings.getBiomeSkyboxes().put("minecraft:ocean","ocean");
+            settings.getBiomeSkyboxes().put("minecraft:forest","gradient");
+            settings.getBiomeSkyboxes().put("minecraft:plains","texture");
+
             saveYamlConfiguration(settingsFile,settings);
             return Optional.empty();
         }

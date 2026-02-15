@@ -53,6 +53,9 @@ public class PlayerSkybox {
     }
 
     public void createSkybox() {
+        if (SkyboxEngine.getData().disabledSkyboxes.contains(player.getUniqueId())) {
+            return;
+        }
         Location spawn = player.getLocation();
         spawn.setPitch(0);
         spawn.setYaw(0);
