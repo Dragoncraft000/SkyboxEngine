@@ -2,6 +2,7 @@ package de.vectorflare.skyboxengine;
 
 import de.vectorflare.skyboxengine.config.ConfigManager;
 import de.vectorflare.skyboxengine.config.Settings;
+import de.vectorflare.skyboxengine.manager.PlayerSkyboxData;
 import de.vectorflare.skyboxengine.skybox.ActiveSkybox;
 import de.vectorflare.skyboxengine.skybox.SkyboxReason;
 import de.vectorflare.skyboxengine.tintcolor.TintProvider;
@@ -77,8 +78,8 @@ public class SkyboxAPI {
      * Gets the full skybox player data of an online player
      * @param player The player you want to get the data for
      */
-    public void getSkyboxData(Player player) {
-        SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player);
+    public PlayerSkyboxData getSkyboxData(Player player) {
+        return SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player);
     }
 
 
