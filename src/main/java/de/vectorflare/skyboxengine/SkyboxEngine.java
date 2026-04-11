@@ -111,6 +111,7 @@ public final class SkyboxEngine extends JavaPlugin {
         registerListeners();
 
         data = YamlConfigurations.update(new File(getDataFolder(),"data.yml").toPath(),Data.class,ConfigManager.createConfigProperties());
+        bStats.onEnable(this);
     }
 
     @Override

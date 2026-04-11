@@ -29,11 +29,12 @@ dependencies {
     compileOnly(libs.lombok)
     compileOnly(libs.packetevents)
     annotationProcessor(libs.lombok)
+    implementation("org.bstats:bstats-bukkit:3.2.1")
 }
 
 
 group = "de.vectorflare"
-version = "1.3"
+version = "1.5"
 description = "Create custom skyboxes for each dimension"
 
 tasks {
@@ -50,6 +51,7 @@ tasks {
             attributes["paperweight-mappings-namespace"] = "mojang"
         }
         relocate("me.tofaa.entitylib", "de.vectorflare.skyboxengine.shaded.entitylib")
+        relocate("org.bstats", "de.vectorflare.skyboxengine.shaded.bstats")
     }
 
     assemble {
@@ -81,7 +83,7 @@ tasks {
     // 1.17           = Java 16
     // 1.18 - 1.20.4  = Java 17
     // 1-20.5+        = Java 21
-    val version = "1.21.4"
+    val version = "1.21.11"
     val javaVersion = JavaLanguageVersion.of(21)
 
     val jvmArgsExternal = listOf(
