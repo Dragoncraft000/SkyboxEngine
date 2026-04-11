@@ -83,6 +83,8 @@ public class SkyboxCommands {
                     } else {
                         TextOutputUtil.sendMiniMessage(commandSender, "  <base>Tint Provider: <accent>not specified");
                     }
+                    TextOutputUtil.sendMiniMessage(commandSender, "  <base>Mount Movement Sync: <accent>" + settings.isUseMountMovementSync());
+                    TextOutputUtil.sendMiniMessage(commandSender, "  <base>Tick Async: <accent>" + settings.isUpdateAsynchronous());
 
                     //TextOutputUtil.sendMiniMessage(commandSender,true,"<base> - " + settings.ge);
                 }));
