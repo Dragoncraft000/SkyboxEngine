@@ -15,13 +15,10 @@ public class TimeProvider implements TintProvider {
 
     @Override
     public Color getTintColor(Player player, Settings.SkyboxSettings skyboxSettings) {
-        long time = player.getWorld().getTime();
+        long time = player.getWorld().getTime() +1;
         int compressed = (int) ((time % 24000));
         int red = compressed / 255;
         int green = compressed % 255;
-        Color color = Color.fromRGB(red,green,0);
-        color.setRed(red);
-        color.setGreen(green);
-        return color;
+        return Color.fromRGB(red,green,0);
     }
 }

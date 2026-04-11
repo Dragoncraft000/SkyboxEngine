@@ -24,8 +24,11 @@ public class PlayerSkyboxData {
         }
     }
 
-    public void tick() {
+    public void tick(boolean async) {
         if (renderedPlayerSkybox != null) {
+            if (renderedPlayerSkybox.getSettings().isUpdateAsynchronous() != async) {
+                return;
+            }
             renderedPlayerSkybox.tickSkybox();
         }
 

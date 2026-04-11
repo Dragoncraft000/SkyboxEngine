@@ -52,7 +52,7 @@ public final class Settings {
         private String tintProvider = "";
 
         private boolean useMountMovementSync = false;
-
+        private boolean updateAsynchronous = true;
 
         public SkyboxSettings() {
 

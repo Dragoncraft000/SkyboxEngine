@@ -77,7 +77,6 @@ public class PlayerSkybox {
         spawn.setYaw(0);
         ItemDisplays.setDisplaySize(skyboxEntity,getSize());
         ItemDisplays.setDisplayTransformationInterpolation(skyboxEntity,getInterpolationDuration());
-        ItemDisplays.setDisplayColor(skyboxEntity,getColor());
         if (player.getLocation().distanceSquared(ConversionUtils.toBukkitLocation(skyboxEntity.getLocation(), player.getWorld())) > Math.pow(getBaseSize() * 0.5,2)) {
             removeSkybox();
             createSkybox();
@@ -86,6 +85,8 @@ public class PlayerSkybox {
 
         if (tintProvider != null) {
             ItemDisplays.setDisplayColor(skyboxEntity, tintProvider.getTintColor(player,settings));
+        } else {
+            ItemDisplays.setDisplayColor(skyboxEntity,getColor());
         }
         ItemDisplays.teleportDisplay(skyboxEntity,spawn);
     }

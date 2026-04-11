@@ -16,13 +16,23 @@ public class PlayerSkyboxManager {
 
     private final BukkitTask updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(SkyboxEngine.getInstance(),this::tickHandler,0,1);
 
+    private final BukkitTask updateTaskSync = Bukkit.getScheduler().runTaskTimer(SkyboxEngine.getInstance(),this::tickHandlerSync,0,1);
+
 
     public PlayerSkyboxData getSkyboxData(Player player) {
         return playerSkyboxes.get(player.getUniqueId());
     }
 
     public void tickHandler() {
-        playerSkyboxes.values().forEach(PlayerSkyboxData::tick);
+        playerSkyboxes.values().forEach((d) -> {
+            d.tick(true);
+        });
+    }
+
+    public void tickHandlerSync() {
+        playerSkyboxes.values().forEach((d) -> {
+            d.tick(false);
+        });
     }
 
     public void addPlayer(Player player) {
