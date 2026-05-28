@@ -17,8 +17,6 @@ public final class Settings {
     private String baseColor = "#aaa8aa";
     private String accentColor = "aqua";
 
-    @Comment({"1 -> Player skybox changes", "2 -> Skybox Time Color Data"})
-    private int debugLogLevel = 0;
     private Map<String,SkyboxSettings> skyboxRegistry = new HashMap<>();
 
     @Comment("Lowest Priority Skyboxes always applied if no other is active, leave empty to disable")
