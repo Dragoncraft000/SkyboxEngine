@@ -34,7 +34,7 @@ dependencies {
 
 
 group = "de.vectorflare"
-version = "1.6"
+version = "1.7"
 description = "Create custom skyboxes for each dimension"
 
 tasks {
@@ -83,7 +83,7 @@ tasks {
     // 1.17           = Java 16
     // 1.18 - 1.20.4  = Java 17
     // 1-20.5+        = Java 21
-    val version = "26.1.2"
+    val version = "26.2"
     val javaVersion = JavaLanguageVersion.of(25)
 
     val jvmArgsExternal = listOf(
@@ -99,7 +99,7 @@ tasks {
         }
 
         downloadPlugins {
-            url("https://github.com/retrooper/packetevents/releases/download/v2.12.1/packetevents-spigot-2.12.1.jar")
+            url("https://github.com/retrooper/packetevents/releases/download/v2.13.0/packetevents-spigot-2.13.0.jar")
            // url("https://download.luckperms.net/1556/bukkit/loader/LuckPerms-Bukkit-5.4.141.jar")
         }
 
