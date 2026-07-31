@@ -36,6 +36,8 @@ public final class Settings {
     private int biomeSkyboxPriority = 100;
     private int commandSkyboxPriority = 50;
 
+    @Comment({"Interval after which the day counter tint provider repeats","Only values up to 500 are supported"})
+    private int yearLength = 365;
 
 
 
