@@ -1,25 +1,29 @@
 package de.vectorflare.skyboxengine.skybox;
 
-import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSetPassengers;
 import de.vectorflare.skyboxengine.SkyboxEngine;
 import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.tintcolor.TintProvider;
-import de.vectorflare.skyboxengine.util.ConversionUtils;
-import de.vectorflare.skyboxengine.util.ItemDisplays;
 import lombok.Getter;
 import lombok.Setter;
-import me.tofaa.entitylib.wrapper.WrapperEntity;
 import org.bukkit.*;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.util.Transformation;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 public class PlayerSkybox {
+
+    private static final Display.Brightness FULL_BRIGHT = new Display.Brightness(15, 15);
 
     private final Player player;
     @Getter
     private final Settings.SkyboxSettings settings;
 
-    private WrapperEntity skyboxEntity;
+    private ItemDisplay skyboxEntity;
 
     @Setter
     private TintProvider tintProvider;
@@ -59,15 +63,19 @@ public class PlayerSkybox {
         Location spawn = player.getLocation();
         spawn.setPitch(0);
         spawn.setYaw(0);
-        skyboxEntity = ItemDisplays.spawnVFX(new ItemStack(Material.LEATHER_HORSE_ARMOR),spawn,player);
-        ItemDisplays.setDisplayModel(skyboxEntity,getSkyboxModel());
-        ItemDisplays.setDisplaySize(skyboxEntity,getSize());
-        ItemDisplays.setDisplayRenderDistance(skyboxEntity,1000);
-        ItemDisplays.setDisplayTeleportInterpolation(skyboxEntity,getInterpolationDuration());
-        ItemDisplays.setDisplayColor(skyboxEntity,getColor());
+        skyboxEntity = spawn.getWorld().spawn(spawn, ItemDisplay.class, entity -> {
+            entity.setVisibleByDefault(false);
+            entity.setPersistent(false);
+            entity.setItemStack(createSkyboxItem(getColor()));
+            entity.setViewRange(1000);
+            entity.setBrightness(FULL_BRIGHT);
+            entity.setTransformation(scaleOf(getSize()));
+            entity.setTeleportDuration(getInterpolationDuration());
+            entity.setInterpolationDuration(getInterpolationDuration());
+        });
+        player.showEntity(SkyboxEngine.getInstance(), skyboxEntity);
         if (settings.isUseMountMovementSync()) {
-            WrapperPlayServerSetPassengers wrapperPlayServerSetPassengers = new WrapperPlayServerSetPassengers(player.getEntityId(),new int[]{skyboxEntity.getEntityId()});
-            skyboxEntity.sendPacketsToViewers(wrapperPlayServerSetPassengers);
+            player.addPassenger(skyboxEntity);
         }
     }
 
@@ -75,20 +83,22 @@ public class PlayerSkybox {
         Location spawn = player.getLocation();
         spawn.setPitch(0);
         spawn.setYaw(0);
-        ItemDisplays.setDisplaySize(skyboxEntity,getSize());
-        ItemDisplays.setDisplayTransformationInterpolation(skyboxEntity,getInterpolationDuration());
-        if (player.getLocation().distanceSquared(ConversionUtils.toBukkitLocation(skyboxEntity.getLocation(), player.getWorld())) > Math.pow(getBaseSize() * 0.5,2)) {
+        skyboxEntity.setTransformation(scaleOf(getSize()));
+        skyboxEntity.setInterpolationDelay(0);
+        skyboxEntity.setInterpolationDuration(getInterpolationDuration());
+        if (!skyboxEntity.getWorld().equals(player.getWorld())
+                || player.getLocation().distanceSquared(skyboxEntity.getLocation()) > Math.pow(getBaseSize() * 0.5,2)) {
             removeSkybox();
             createSkybox();
             return;
         }
 
         if (tintProvider != null) {
-            ItemDisplays.setDisplayColor(skyboxEntity, tintProvider.getTintColor(player,settings));
+            skyboxEntity.setItemStack(createSkyboxItem(tintProvider.getTintColor(player,settings)));
         } else {
-            ItemDisplays.setDisplayColor(skyboxEntity,getColor());
+            skyboxEntity.setItemStack(createSkyboxItem(getColor()));
         }
-        ItemDisplays.teleportDisplay(skyboxEntity,spawn);
+        skyboxEntity.teleport(spawn);
     }
 
     public void removeSkybox() {
@@ -101,6 +111,19 @@ public class PlayerSkybox {
         else {
             skyboxEntity.remove();
         }
+    }
+
+    private ItemStack createSkyboxItem(Color color) {
+        ItemStack item = new ItemStack(Material.LEATHER_HORSE_ARMOR);
+        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+        meta.setItemModel(getSkyboxModel());
+        meta.setColor(color);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private static Transformation scaleOf(float size) {
+        return new Transformation(new Vector3f(), new AxisAngle4f(), new Vector3f(size,size,size), new AxisAngle4f());
     }
 
 }
