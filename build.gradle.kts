@@ -25,9 +25,7 @@ dependencies {
     implementation(libs.commandapi.shade)
     implementation(libs.configlib.yaml)
     implementation(libs.configlib.paper)
-    implementation(libs.entitylib)
     compileOnly(libs.lombok)
-    compileOnly(libs.packetevents)
     annotationProcessor(libs.lombok)
     implementation("org.bstats:bstats-bukkit:3.2.1")
 }
@@ -50,7 +48,6 @@ tasks {
             attributes["Implementation-Version"] = rootProject.version
             attributes["paperweight-mappings-namespace"] = "mojang"
         }
-        relocate("me.tofaa.entitylib", "de.vectorflare.skyboxengine.shaded.entitylib")
         relocate("org.bstats", "de.vectorflare.skyboxengine.shaded.bstats")
     }
 
@@ -99,7 +96,6 @@ tasks {
         }
 
         downloadPlugins {
-            url("https://github.com/retrooper/packetevents/releases/download/v2.13.0/packetevents-spigot-2.13.0.jar")
            // url("https://download.luckperms.net/1556/bukkit/loader/LuckPerms-Bukkit-5.4.141.jar")
         }
 
