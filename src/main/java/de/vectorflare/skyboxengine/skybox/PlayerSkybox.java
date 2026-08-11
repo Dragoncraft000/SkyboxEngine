@@ -98,7 +98,7 @@ public class PlayerSkybox {
         } else {
             skyboxEntity.setItemStack(createSkyboxItem(getColor()));
         }
-        skyboxEntity.teleport(spawn);
+        skyboxEntity.teleportAsync(spawn);
     }
 
     public void removeSkybox() {
