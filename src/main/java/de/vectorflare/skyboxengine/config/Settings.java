@@ -16,6 +16,9 @@ public final class Settings {
     private String prefix = "<base>[<gradient:aqua:light_purple>SkyboxEngine</gradient><base>]";
     private String baseColor = "#aaa8aa";
     private String accentColor = "aqua";
+    @Comment("Disables all synchronous skybox updates entirely, will override skybox specific 'updateAsynchronous' settings")
+    private boolean disableSynchronousTicking = false;
+
 
     private Map<String,SkyboxSettings> skyboxRegistry = new HashMap<>();
 

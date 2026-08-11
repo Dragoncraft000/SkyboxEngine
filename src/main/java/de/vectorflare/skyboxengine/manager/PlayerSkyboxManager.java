@@ -30,6 +30,9 @@ public class PlayerSkyboxManager {
     }
 
     public void tickHandlerSync() {
+        if (SkyboxEngine.getConfigInstance().isDisableSynchronousTicking()) {
+            return;
+        }
         playerSkyboxes.values().forEach((d) -> {
             d.tick(false);
         });
