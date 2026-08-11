@@ -1,6 +1,5 @@
 package de.vectorflare.skyboxengine;
 
-import com.github.retrooper.packetevents.PacketEvents;
 import de.exlll.configlib.YamlConfigurations;
 import de.vectorflare.skyboxengine.commands.MainCommand;
 import de.vectorflare.skyboxengine.config.ConfigManager;
@@ -19,9 +18,6 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIPaperConfig;
 import lombok.Getter;
 import lombok.Setter;
-import me.tofaa.entitylib.APIConfig;
-import me.tofaa.entitylib.EntityLib;
-import me.tofaa.entitylib.spigot.SpigotEntityLibPlatform;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -95,9 +91,6 @@ public final class SkyboxEngine extends JavaPlugin {
         }
 
         CommandAPI.onEnable();
-        SpigotEntityLibPlatform platform = new SpigotEntityLibPlatform(this);
-        APIConfig settings = new APIConfig(PacketEvents.getAPI());
-        EntityLib.init(platform, settings);
 
         playerSkyboxManager = new PlayerSkyboxManager();
         tintProviders = new TintProviders();

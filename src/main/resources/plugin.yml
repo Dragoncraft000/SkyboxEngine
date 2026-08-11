@@ -5,4 +5,3 @@ api-version: '1.21.4'
 authors: [ Dragoncraft ]
 description: Create custom skyboxes for each dimension
 load: STARTUP
-depend: [ packetevents ]

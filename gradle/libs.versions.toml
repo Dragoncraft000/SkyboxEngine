@@ -5,8 +5,6 @@ commandapi = "12.0.0"
 configlib = "4.8.1"
 shadow = "9.4.2"
 run-paper = "3.0.2"
-packetevents = "2.13.0"
-entitylib = "2.4.11"
 
 [libraries]
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
@@ -14,8 +12,6 @@ lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" 
 commandapi-shade = { group = "dev.jorel", name = "commandapi-paper-shade", version.ref = "commandapi" }
 configlib-yaml = { group = "de.exlll", name = "configlib-yaml", version.ref = "configlib" }
 configlib-paper = { group = "de.exlll", name = "configlib-paper", version.ref = "configlib" }
-packetevents = { module = "com.github.retrooper:packetevents-spigot", version.ref = "packetevents" }
-entitylib = { module = "com.github.Tofaa2.EntityLib:spigot", version.ref = "entitylib"}
 
 [plugins]
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
