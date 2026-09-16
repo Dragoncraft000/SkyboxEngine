@@ -47,8 +47,11 @@ public class WorldSkyboxListener implements Listener {
     }
 
 
-    private static void checkWorldSkyboxChange(Player player, World world) {
+    public static void checkWorldSkyboxChange(Player player, World world) {
         PlayerSkyboxData data = SkyboxEngine.getPlayerSkyboxManager().getSkyboxData(player);
+        if (data == null) {
+            return;
+        }
         List<ActiveSkybox> skyboxes = data.playerSkyboxes.stream().toList();
 
         for (ActiveSkybox activeSkybox : skyboxes) {

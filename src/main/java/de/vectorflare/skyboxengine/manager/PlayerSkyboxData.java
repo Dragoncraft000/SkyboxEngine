@@ -6,6 +6,7 @@ import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.skybox.ActiveSkybox;
 import de.vectorflare.skyboxengine.skybox.PlayerSkybox;
 import de.vectorflare.skyboxengine.skybox.SkyboxReason;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.PriorityQueue;
@@ -112,7 +113,7 @@ public class PlayerSkyboxData {
         }
         // render the new skybox
         renderedPlayerSkybox = new PlayerSkybox(player,skybox.skybox);
-        renderedPlayerSkybox.createSkybox();
+        Bukkit.getScheduler().runTask(SkyboxEngine.getInstance(),() -> renderedPlayerSkybox.createSkybox());
     }
 
 }

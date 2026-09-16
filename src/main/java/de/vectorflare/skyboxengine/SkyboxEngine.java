@@ -7,6 +7,7 @@ import de.vectorflare.skyboxengine.config.Data;
 import de.vectorflare.skyboxengine.config.Settings;
 import de.vectorflare.skyboxengine.listener.BiomeSkyboxListener;
 import de.vectorflare.skyboxengine.listener.MainListener;
+import de.vectorflare.skyboxengine.listener.RemovedEntityListener;
 import de.vectorflare.skyboxengine.listener.WorldSkyboxListener;
 import de.vectorflare.skyboxengine.manager.PlayerSkyboxManager;
 import de.vectorflare.skyboxengine.tintcolor.TintProviders;
@@ -126,6 +127,7 @@ public final class SkyboxEngine extends JavaPlugin {
         registerListener(new MainListener());
         registerListener(new WorldSkyboxListener());
         registerListener(new BiomeSkyboxListener());
+        registerListener(new RemovedEntityListener());
     }
 
     /**

@@ -24,6 +24,7 @@ public class PlayerSkybox {
     private final Settings.SkyboxSettings settings;
 
     private ItemDisplay skyboxEntity;
+    private boolean tickLock = false;
 
     @Setter
     private TintProvider tintProvider;
@@ -60,6 +61,9 @@ public class PlayerSkybox {
         if (SkyboxEngine.getData().disabledSkyboxes.contains(player.getUniqueId())) {
             return;
         }
+        if (skyboxEntity != null) {
+            skyboxEntity.remove();
+        }
         Location spawn = player.getLocation();
         spawn.setPitch(0);
         spawn.setYaw(0);
@@ -72,26 +76,36 @@ public class PlayerSkybox {
             entity.setTransformation(scaleOf(getSize()));
             entity.setTeleportDuration(getInterpolationDuration());
             entity.setInterpolationDuration(getInterpolationDuration());
+
         });
         player.showEntity(SkyboxEngine.getInstance(), skyboxEntity);
         if (settings.isUseMountMovementSync()) {
             player.addPassenger(skyboxEntity);
         }
+        tickLock = false;
     }
 
     public void tickSkybox() {
         Location spawn = player.getLocation();
         spawn.setPitch(0);
         spawn.setYaw(0);
+        if (tickLock) {
+            return;
+        }
+        if (skyboxEntity == null) {
+            tickLock = true;
+            Bukkit.getScheduler().runTask(SkyboxEngine.getInstance(),this::createSkybox);
+            return;
+        }
+/*        if (!skyboxEntity.getWorld().equals(player.getWorld())
+                || player.getLocation().distanceSquared(skyboxEntity.getLocation()) > Math.pow(getBaseSize() * 0.5,2)) {
+            tickLock = true;
+            Bukkit.getScheduler().runTask(SkyboxEngine.getInstance(),this::createSkybox);
+            return;
+        }*/
         skyboxEntity.setTransformation(scaleOf(getSize()));
         skyboxEntity.setInterpolationDelay(0);
         skyboxEntity.setInterpolationDuration(getInterpolationDuration());
-        if (!skyboxEntity.getWorld().equals(player.getWorld())
-                || player.getLocation().distanceSquared(skyboxEntity.getLocation()) > Math.pow(getBaseSize() * 0.5,2)) {
-            removeSkybox();
-            createSkybox();
-            return;
-        }
 
         if (tintProvider != null) {
             skyboxEntity.setItemStack(createSkyboxItem(tintProvider.getTintColor(player,settings)));
@@ -105,12 +119,16 @@ public class PlayerSkybox {
         removeSkybox(0);
     }
     public void removeSkybox(int delay) {
-        if (delay > 0)  {
-            Bukkit.getScheduler().runTaskLater(SkyboxEngine.getInstance(),() -> skyboxEntity.remove(),delay);
+        tickLock = true;
+        ItemDisplay entity = skyboxEntity;
+        if (entity == null) {
+            return;
         }
-        else {
-            skyboxEntity.remove();
-        }
+        skyboxEntity = null;
+        Bukkit.getScheduler().runTaskLater(SkyboxEngine.getInstance(), () -> {
+            entity.remove();
+            tickLock = false;
+        },delay);
     }
 
     private ItemStack createSkyboxItem(Color color) {

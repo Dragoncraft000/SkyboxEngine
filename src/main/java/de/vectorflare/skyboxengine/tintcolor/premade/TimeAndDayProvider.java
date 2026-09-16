@@ -21,7 +21,7 @@ public class TimeAndDayProvider implements TintProvider {
         int red = Math.min(compressed / 255,127);
         int green = compressed % 255;
         int day = Math.toIntExact(time / 24000) % SkyboxEngine.getConfigInstance().getYearLength();
-        int blue = day % 255;
+        int blue = day % 256;
         if ( day > 255) {
             red += 128;
         }
