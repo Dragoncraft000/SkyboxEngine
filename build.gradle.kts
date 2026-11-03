@@ -22,7 +22,10 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper.api)
-    implementation(libs.commandapi.shade)
+    implementation(libs.commandapi.shade) {
+        // pin to the regular self-contained variant until commandapi fixes it
+        attributes { attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 21) }
+    }
     implementation(libs.configlib.yaml)
     implementation(libs.configlib.paper)
     compileOnly(libs.lombok)
