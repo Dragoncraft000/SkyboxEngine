@@ -112,7 +112,10 @@ public final class SkyboxEngine extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Disabling Skybox Engine");
         CommandAPI.onDisable();
-        saveData();
+        if (data != null) {
+            saveData();
+        }
+
     }
 
     public void saveData() {

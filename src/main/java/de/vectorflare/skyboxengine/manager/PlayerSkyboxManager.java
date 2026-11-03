@@ -7,12 +7,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerSkyboxManager {
 
-    private final HashMap<UUID, PlayerSkyboxData> playerSkyboxes = new HashMap<>();
+    private final ConcurrentHashMap<UUID, PlayerSkyboxData> playerSkyboxes = new ConcurrentHashMap<>();
 
     private final BukkitTask updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(SkyboxEngine.getInstance(),this::tickHandler,0,1);
 

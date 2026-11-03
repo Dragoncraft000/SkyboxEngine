@@ -16,7 +16,7 @@ public class TimeAndDayProvider implements TintProvider {
 
     @Override
     public Color getTintColor(Player player, Settings.SkyboxSettings skyboxSettings) {
-        long time = player.getWorld().getTime() +1;
+        long time = player.getWorld().getFullTime() +1;
         int compressed = (int) ((time % 24000));
         int red = Math.min(compressed / 255,127);
         int green = compressed % 255;

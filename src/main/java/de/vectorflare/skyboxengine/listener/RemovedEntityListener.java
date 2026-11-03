@@ -12,6 +12,9 @@ public class RemovedEntityListener implements Listener {
         if (event.getEntity().getType() != EntityType.ITEM_DISPLAY) {
             return;
         }
+        if (event.getEntity().getMetadata("skyboxengine:tag").isEmpty()) {
+            return;
+        }
         WorldSkyboxListener.checkWorldSkyboxChange(event.getPlayer(), event.getPlayer().getWorld());
     }
 

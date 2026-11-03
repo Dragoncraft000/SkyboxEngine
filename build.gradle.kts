@@ -32,7 +32,7 @@ dependencies {
 
 
 group = "de.vectorflare"
-version = "1.7"
+version = "1.7.1"
 description = "Create custom skyboxes for each dimension"
 
 tasks {
@@ -80,7 +80,7 @@ tasks {
     // 1.17           = Java 16
     // 1.18 - 1.20.4  = Java 17
     // 1-20.5+        = Java 21
-    val version = "26.2"
+    val version = "26.3"
     val javaVersion = JavaLanguageVersion.of(25)
 
     val jvmArgsExternal = listOf(

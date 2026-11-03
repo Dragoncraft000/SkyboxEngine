@@ -46,7 +46,7 @@ public class BiomeSkyboxListener implements Listener {
 
 
     public static void checkBiomeChanges() {
-        if (Bukkit.getServer().getCurrentTick() % SkyboxEngine.getConfigInstance().getBiomeCheckInterval() != 0) {
+        if (SkyboxEngine.getConfigInstance().getBiomeCheckInterval() > 0 && Bukkit.getServer().getCurrentTick() % SkyboxEngine.getConfigInstance().getBiomeCheckInterval() != 0) {
             return;
         }
         Bukkit.getOnlinePlayers().forEach(p -> {

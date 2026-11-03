@@ -11,6 +11,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
@@ -23,8 +24,8 @@ public class PlayerSkybox {
     @Getter
     private final Settings.SkyboxSettings settings;
 
-    private ItemDisplay skyboxEntity;
-    private boolean tickLock = false;
+    private volatile ItemDisplay skyboxEntity;
+    private volatile boolean tickLock = false;
 
     @Setter
     private TintProvider tintProvider;
@@ -61,6 +62,9 @@ public class PlayerSkybox {
         if (SkyboxEngine.getData().disabledSkyboxes.contains(player.getUniqueId())) {
             return;
         }
+        if (!player.isOnline()) {
+            return;
+        }
         if (skyboxEntity != null) {
             skyboxEntity.remove();
         }
@@ -76,7 +80,7 @@ public class PlayerSkybox {
             entity.setTransformation(scaleOf(getSize()));
             entity.setTeleportDuration(getInterpolationDuration());
             entity.setInterpolationDuration(getInterpolationDuration());
-
+            entity.setMetadata("skyboxengine:tag",new FixedMetadataValue(SkyboxEngine.getInstance(),"true"));
         });
         player.showEntity(SkyboxEngine.getInstance(), skyboxEntity);
         if (settings.isUseMountMovementSync()) {
@@ -112,7 +116,10 @@ public class PlayerSkybox {
         } else {
             skyboxEntity.setItemStack(createSkyboxItem(getColor()));
         }
-        skyboxEntity.teleportAsync(spawn);
+        if (!settings.isUseMountMovementSync()) {
+            skyboxEntity.teleportAsync(spawn);
+        }
+
     }
 
     public void removeSkybox() {

@@ -112,8 +112,10 @@ public class PlayerSkyboxData {
             return;
         }
         // render the new skybox
-        renderedPlayerSkybox = new PlayerSkybox(player,skybox.skybox);
-        Bukkit.getScheduler().runTask(SkyboxEngine.getInstance(),() -> renderedPlayerSkybox.createSkybox());
+
+        PlayerSkybox skyboxNew = new PlayerSkybox(player,skybox.skybox);
+        renderedPlayerSkybox = skyboxNew;
+        Bukkit.getScheduler().runTask(SkyboxEngine.getInstance(), skyboxNew::createSkybox);
     }
 
 }
